@@ -1,0 +1,36 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"       
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+ 
+    <EditText
+        android:id="@+id/txtNewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Rename" />
+
+    <Button
+        android:id="@+id/bttSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtNewName"
+        android:layout_below="@+id/txtNewName"
+        android:layout_marginTop="18dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/bttCan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bttSave"
+        android:layout_alignBottom="@+id/bttSave"
+        android:layout_alignRight="@+id/txtNewName"
+        android:text="Cancel" />
+ 
+</RelativeLayout>
