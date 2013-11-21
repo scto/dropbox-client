@@ -51,14 +51,14 @@ public class FileExplorer extends Activity {
 
 		// Initialization
 		init();
-
+		
 		// Update Adapter
 		list = (ListView) findViewById(R.id.listView1);
 		FileExplorerAdapter adapter = new FileExplorerAdapter(this, listTitles,
 				listSizes, listExplorer);
 		list.setAdapter(adapter);
 
-		// Go Foward
+		// Go Forward
 		list.setOnItemClickListener(new OnClickItemForwardExplorer(explorer,
 				listExplorer, this));
 
@@ -94,7 +94,7 @@ public class FileExplorer extends Activity {
 	}
 
 	// Reload Activity
-	private void updateFileExplorer () {
+	public void updateFileExplorer () {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
@@ -182,9 +182,12 @@ public class FileExplorer extends Activity {
 		case 1:
 			// Rename
 			renameListener(fileName, directory);
+			updateFileExplorer();
 			break;
 		case 2:
 			// Moving Directory
+			explorer.goForward(MainActivity.ROOT);
+			this.finish();
 			Intent fileDropboxExplorer = new Intent(FileExplorer.this, FileDropboxExplorer.class);
 			fileDropboxExplorer.putExtra("OLD_PATH", directory);
 			fileDropboxExplorer.putExtra("FILE_NAME", fileName);
@@ -193,6 +196,8 @@ public class FileExplorer extends Activity {
 			break;
 		case 3:
 			// Download
+			explorer.goForward(MainActivity.ROOT);
+			this.finish();
 			Intent fileSystemExplorer = new Intent(FileExplorer.this, FileSystemExplorer.class);
 			fileSystemExplorer.putExtra("OLD_PATH", directory);
 			fileSystemExplorer.putExtra("FILE_NAME", fileName);
@@ -201,9 +206,12 @@ public class FileExplorer extends Activity {
 			break;
 		case 4:
 			// Upload
+			explorer.goForward(MainActivity.ROOT);
 			Intent fileSysExplorer = new Intent(FileExplorer.this, FileSystemExplorer.class);
 			fileSysExplorer.putExtra("ID", 4);
 			FileExplorer.this.startActivity(fileSysExplorer);
+			Explorer.getInstance().setPath(MainActivity.ROOT);
+			this.finish();
 			break;
 		case 5:
 			// Exit

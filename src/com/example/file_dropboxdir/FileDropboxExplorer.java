@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +41,9 @@ public class FileDropboxExplorer extends Activity {
 	private Button bttSelect;
 	private Button bttCancel;
 	private int idCommand;
-	private String pathFile;
+	private String pathFile; // Path to Upload file from sd_card
+	private ProgressDialog mProgressDialog;
+
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,12 +53,12 @@ public class FileDropboxExplorer extends Activity {
 		// Get Old Path from FileExplorer Activity
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String path = extras.getString("OLD_PATH");
+			String path = extras.getString("OLD_PATH"); // Get the from_path to move item
 			instance.setFromPath(path);
-			String fileName = extras.getString("FILE_NAME");
+			String fileName = extras.getString("FILE_NAME"); // Get the file name to move item
 			instance.setFileName(fileName);
 			idCommand = extras.getInt("ID");
-			pathFile = extras.getString("FILE_PATH");
+			pathFile = extras.getString("FILE_PATH"); // Path to Upload file from sd_card
 		}
 
 		// Initialization
@@ -73,6 +77,10 @@ public class FileDropboxExplorer extends Activity {
 
 		// Adding Listener for buttons
 		bttSelect = (Button) findViewById(R.id.bttSelectDir);
+		
+		/* If idDommand is 2, Moving function will be called,
+		 * else it is 4, Uploading function will be called instead.
+		 */
 		switch (idCommand) {
 		
 		// Moving item
@@ -81,36 +89,12 @@ public class FileDropboxExplorer extends Activity {
 			break;
 		// Uploading item
 		case 4:
+			showMess("Select Dropbox's Directory to Upload Your Item!");
 			bttSelect.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
-					File file = new File(pathFile);
-					FileInputStream inputStream = null;
-					Log.e("FILE NAME", file.getName());
-					try {
-						String path = instance.getPath() + "/" + file.getName();
-						Log.e("TARGET PATH", path);
-						inputStream = new FileInputStream(file);
-						Entry newEntry = Explorer
-								.getInstance()
-								.getMDBApi()
-								.putFile(path, inputStream, file.length(),
-										null, null);
-						showMess("Uploading successfully!");
-						FileDropboxExplorer.this.finish();
-					} catch (Exception e) {
-						System.out.println("Something went wrong: " + e);
-					} finally {
-						if (inputStream != null) {
-							try {
-								inputStream.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-
+					new OnUploadItem(FileDropboxExplorer.this, pathFile, instance).execute();
+					// Dialog is defined below
 				}
 			});
 			break;
@@ -121,10 +105,12 @@ public class FileDropboxExplorer extends Activity {
 
 		bttCancel = (Button) findViewById(R.id.bttCancelDir);
 		bttCancel.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				FileDropboxExplorer.this.finish();
+				instance.goForward(MainActivity.ROOT);
+				finish();
+				Intent fileExplorer = new Intent(FileDropboxExplorer.this, FileExplorer.class);
+				FileDropboxExplorer.this.startActivity(fileExplorer);
 			}
 		});
 	}
@@ -142,7 +128,25 @@ public class FileDropboxExplorer extends Activity {
 		instance.goBackward();
 		updateFileExplorer();
 	}
-
+	
+	
+	/******************************************************
+	 * 		Dialog to process OnClickUploadItem			  *
+	 ******************************************************/
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Uploading...");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		default:
+			return null;
+		}
+	}
 	private void showMess(String str) {
 		Toast toast = Toast.makeText(getApplicationContext(), str,
 				Toast.LENGTH_SHORT);

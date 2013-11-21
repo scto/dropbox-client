@@ -22,6 +22,7 @@ import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 import com.dropbox.client2.session.TokenPair;
+import com.example.authentication.FormAuthentication;
 import com.example.file_dropboxdir.FileDropboxExplorer;
 import com.example.file_system.FileSystemExplorer;
 
@@ -86,9 +87,11 @@ public class MainActivity extends Activity {
 				Explorer.setInstance(explo);
 				explo.execute();
 				
+				
 				/*
-				Intent fileExplorer = new Intent(MainActivity.this, FileDropboxExplorer.class);
-				MainActivity.this.startActivity(fileExplorer);*/
+				Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
+				MainActivity.this.startActivity(fileExplorer);
+				*/
 			}
 		});
 		
