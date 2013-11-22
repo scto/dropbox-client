@@ -88,7 +88,6 @@ public class FileSystemExplorer extends Activity {
 
 		switch (idCommand) {
 		case 3:
-			showMess("Select Folder in SD_CARD to Save Your Item!");
 			// OnClickDownload will be called
 			bttSelect.setOnClickListener(new OnClickListener() {
 				
@@ -101,7 +100,6 @@ public class FileSystemExplorer extends Activity {
 			});
 			break;
 		case 4:
-			showMess("Select Item to Upload!" + "\nYou cannot upload the whole Folder!");
 			// OnClickUpload will be called
 			Log.e("ON_CLICK", "Upload is called");
 			bttSelect.setVisibility(View.GONE);

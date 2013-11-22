@@ -2,38 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center_horizontal|center_vertical|top"
     android:orientation="vertical" >
-
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal|center_vertical|top"
+	    android:orientation="vertical" >
+    	<Button
+    	    android:id="@+id/bttSelectDir"
+    	    android:layout_width="96dp"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/select_button" />
+    	
+    	<Button
+    	    android:id="@+id/bttCancelDir"
+    	    android:layout_width="96dp"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentRight="true"
+    	    android:layout_alignParentTop="true"
+    	    android:text="@string/cancel_button" />
+	</RelativeLayout>
+    
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
-        android:layout_height="422dp" >
+        android:layout_height="fill_parent" >
     </ListView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/bttSelectDir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="55dp"
-            android:paddingRight="55dp"
-            android:text="Select" />
-
-        <Button
-            android:id="@+id/bttCancelDir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="55dp"
-            android:paddingRight="55dp"
-            android:text="Cancel" />
-
-    </RelativeLayout>
-
+    
 </LinearLayout>

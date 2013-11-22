@@ -17,17 +17,13 @@ import android.widget.Button;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Account;
-import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
-import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 import com.dropbox.client2.session.TokenPair;
 import com.example.authentication.FormAuthentication;
-import com.example.file_dropboxdir.FileDropboxExplorer;
-import com.example.file_system.FileSystemExplorer;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class MainActivity extends Activity {
@@ -45,7 +41,7 @@ public class MainActivity extends Activity {
 
 	DropboxAPI<AndroidAuthSession> mDBApi;
 
-	private boolean isVerify = false;
+	private boolean isVerify = true;
 	private boolean isLogin;
 	private Button btt_explorer;
 	private Button btt_authentication;

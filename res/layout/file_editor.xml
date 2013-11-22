@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/btn_ted_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button" />
+
+    <Button
+        android:id="@+id/btn_ted_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_ted_save"
+        android:text="@string/cancel_button" />
+
+    <EditText
+        android:id="@+id/txt_edit_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_ted_save"
+        android:ems="10"
+        android:gravity="center"
+        android:padding="12dp" 
+        android:inputType="textMultiLine">
+    </EditText>
+
+</RelativeLayout>

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.example.box_client.R;
+import com.example.model.Basename;
+import com.example.model.FileImage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -47,7 +49,9 @@ public class FileSystemAdapter extends ArrayAdapter<String>{
 		if (e.isDirectory()) {
 			img.setImageResource(R.drawable.folder);
 		} else {
-			img.setImageResource(R.drawable.file);
+			Basename basename = new Basename(e.getPath(), '/', '.');
+			FileImage fileImage = FileImage.getInstance();
+			img.setImageResource(fileImage.getImage(basename.extension()));
 		}
 		return row;
 	}

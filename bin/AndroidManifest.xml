@@ -55,13 +55,18 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask" >
         </activity>
-                <activity
+        <activity
             android:name="com.example.authentication.FormAuthentication"
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask" >
         </activity>
-                <activity
+        <activity
             android:name="com.example.authentication.VerifyAuthentication"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name="com.example.editing.FileEditing"
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask" >
         </activity>

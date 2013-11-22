@@ -41,7 +41,6 @@ public class FileDropboxExplorer extends Activity {
 	private String pathFile; // Path to Upload file from sd_card
 	private ProgressDialog mProgressDialog;
 
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_dropboxdir);
@@ -50,12 +49,16 @@ public class FileDropboxExplorer extends Activity {
 		// Get Old Path from FileExplorer Activity
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String path = extras.getString("OLD_PATH"); // Get the from_path to move item
+			String path = extras.getString("OLD_PATH"); // Get the from_path to
+														// move item
 			instance.setFromPath(path);
-			String fileName = extras.getString("FILE_NAME"); // Get the file name to move item
+			String fileName = extras.getString("FILE_NAME"); // Get the file
+																// name to move
+																// item
 			instance.setFileName(fileName);
 			idCommand = extras.getInt("ID");
-			pathFile = extras.getString("FILE_PATH"); // Path to Upload file from sd_card
+			pathFile = extras.getString("FILE_PATH"); // Path to Upload file
+														// from sd_card
 		}
 
 		// Initialization
@@ -71,28 +74,34 @@ public class FileDropboxExplorer extends Activity {
 		// Go Forward
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
+					long arg3) {
 				// TODO Auto-generated method stub
-				new OnClickForward(instance, FileDropboxExplorer.this, index).execute();
+				if (listExplorer.get(index).isDir) {
+					new OnClickForward(instance, FileDropboxExplorer.this,
+							index).execute();
+				}
 			}
 		});
 
 		// Adding Listener for buttons
 		bttSelect = (Button) findViewById(R.id.bttSelectDir);
-		
-		/* If idDommand is 2, Moving function will be called,
-		 * else it is 4, Uploading function will be called instead.
+
+		/*
+		 * If idDommand is 2, Moving function will be called, else it is 4,
+		 * Uploading function will be called instead.
 		 */
 		switch (idCommand) {
-		
+
 		// Moving item
 		case 2:
 			bttSelect.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					new OnMovingItemAsync(instance, FileDropboxExplorer.this).execute();
+					new OnMovingItemAsync(instance, FileDropboxExplorer.this)
+							.execute();
 				}
 			});
 			break;
@@ -102,7 +111,8 @@ public class FileDropboxExplorer extends Activity {
 			bttSelect.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					new OnUploadItem(FileDropboxExplorer.this, pathFile, instance).execute();
+					new OnUploadItem(FileDropboxExplorer.this, pathFile,
+							instance).execute();
 					// Dialog is defined below
 				}
 			});
@@ -118,7 +128,8 @@ public class FileDropboxExplorer extends Activity {
 			public void onClick(View v) {
 				instance.goForward(MainActivity.ROOT);
 				finish();
-				Intent fileExplorer = new Intent(FileDropboxExplorer.this, FileExplorer.class);
+				Intent fileExplorer = new Intent(FileDropboxExplorer.this,
+						FileExplorer.class);
 				FileDropboxExplorer.this.startActivity(fileExplorer);
 			}
 		});
@@ -129,10 +140,9 @@ public class FileDropboxExplorer extends Activity {
 	public void onBackPressed() {
 		new OnClickBackward(instance, FileDropboxExplorer.this).execute();
 	}
-	
-	
+
 	/******************************************************
-	 * 		Dialog to process OnClickUploadItem			  *
+	 * Dialog to process OnClickUploadItem *
 	 ******************************************************/
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -162,6 +172,7 @@ public class FileDropboxExplorer extends Activity {
 			return null;
 		}
 	}
+
 	private void showMess(String str) {
 		Toast toast = Toast.makeText(getApplicationContext(), str,
 				Toast.LENGTH_SHORT);

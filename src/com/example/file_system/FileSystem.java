@@ -123,9 +123,9 @@ public class FileSystem {
 		return result;
 	}
 
-	private boolean retrieveDirectory (String path) {
+	private boolean retrieveDirectory(String path) {
 		File curDir = new File(path);
-		File[]dir = curDir.listFiles();
+		File[] dir = curDir.listFiles();
 
 		// Without if-condition, dir will return Null Pointer Exception
 		if (dir != null && dir.length > 0) {
@@ -138,8 +138,8 @@ public class FileSystem {
 			}
 			setCurPath(path);
 			return true;
-		} 
-			return false;
+		}
+		return false;
 	}
 
 	public boolean goForward(String path) {

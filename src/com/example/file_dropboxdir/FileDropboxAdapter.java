@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.example.box_client.R;
+import com.example.model.Basename;
+import com.example.model.FileImage;
 
 public class FileDropboxAdapter extends ArrayAdapter<String> {
 	Context context;
@@ -46,7 +48,9 @@ public class FileDropboxAdapter extends ArrayAdapter<String> {
 		if (e.isDir) {
 			img.setImageResource(R.drawable.folder);
 		} else {
-			img.setImageResource(R.drawable.file);
+			Basename basename = new Basename(e.path, '/', '.');
+			FileImage fileImage = FileImage.getInstance();
+			img.setImageResource(fileImage.getImage(basename.extension()));
 		}
 		return row;
 	}

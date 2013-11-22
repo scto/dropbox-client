@@ -7,6 +7,7 @@ import com.example.box_client.FileExplorer;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -28,13 +29,19 @@ public class OnClickItemForwardExplorer implements OnItemClickListener {
 		File tmp = fileSystem.getListExplorer().get(index);
 		String path = tmp.getPath();
 
-		if (!fileSystem.goForward(path)) {
-			Toast.makeText(activity, "Directory is missing!", 3000).show();
-		} else {
+		if (fileSystem.goForward(path)) {
 			Intent intent = activity.getIntent();
 			activity.finish();
 			activity.startActivity(intent);
+		} else {
+			showMess("Permission denied!");
 		}
+	}
+	private void showMess(String str) {
+		Toast toast = Toast.makeText(activity.getApplicationContext(), str,
+				Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
 	}
 
 }

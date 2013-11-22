@@ -1,11 +1,14 @@
 package com.example.box_client;
 
+import com.example.editing.FileEditing;
 import com.example.file_dropboxdir.FileDropboxExplorer;
 import com.example.file_system.FileSystemExplorer;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.Gravity;
+import android.widget.Toast;
 
 public class ContextItemSelector extends AsyncTask<String, Void, Void>{
 	
@@ -71,6 +74,15 @@ public class ContextItemSelector extends AsyncTask<String, Void, Void>{
 			Intent fileSysExplorer = new Intent(activity, FileSystemExplorer.class);
 			fileSysExplorer.putExtra("ID", 4);
 			activity.startActivity(fileSysExplorer);
+			Explorer.getInstance().setPath(MainActivity.ROOT);
+			activity.finish();
+			break;
+		case 5:
+			// Modify
+			finder.goForward(MainActivity.ROOT);
+			Intent fileEditting = new Intent(activity, FileEditing.class);
+			fileEditting.putExtra("OLD_PATH", directory);
+			activity.startActivity(fileEditting);
 			Explorer.getInstance().setPath(MainActivity.ROOT);
 			activity.finish();
 			break;
