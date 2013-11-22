@@ -1,8 +1,5 @@
 package com.example.file_dropboxdir;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -10,21 +7,21 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.exception.DropboxException;
-import com.example.file_dropboxdir.OnClickItemForwardExplorer;
-import com.example.box_client.Explorer;
 import com.example.box_client.FileExplorer;
 import com.example.box_client.MainActivity;
+import com.example.box_client.OnClickBackward;
+import com.example.box_client.OnClickForward;
 import com.example.box_client.R;
 
 public class FileDropboxExplorer extends Activity {
@@ -72,8 +69,13 @@ public class FileDropboxExplorer extends Activity {
 				listDescriptions, listExplorer);
 		list.setAdapter(adapter);
 		// Go Forward
-		list.setOnItemClickListener(new OnClickItemForwardExplorer(instance,
-				FileDropboxExplorer.this));
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+				// TODO Auto-generated method stub
+				new OnClickForward(instance, FileDropboxExplorer.this, index).execute();
+			}
+		});
 
 		// Adding Listener for buttons
 		bttSelect = (Button) findViewById(R.id.bttSelectDir);
@@ -85,7 +87,14 @@ public class FileDropboxExplorer extends Activity {
 		
 		// Moving item
 		case 2:
-			bttSelect.setOnClickListener(new OnSelectPath(instance, this));
+			bttSelect.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					new OnMovingItemAsync(instance, FileDropboxExplorer.this).execute();
+				}
+			});
 			break;
 		// Uploading item
 		case 4:
@@ -115,18 +124,10 @@ public class FileDropboxExplorer extends Activity {
 		});
 	}
 
-	// Reload Activity
-	private void updateFileExplorer() {
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
-	}
-
 	// Implement Listener for Back button
 	@Override
 	public void onBackPressed() {
-		instance.goBackward();
-		updateFileExplorer();
+		new OnClickBackward(instance, FileDropboxExplorer.this).execute();
 	}
 	
 	
@@ -139,6 +140,20 @@ public class FileDropboxExplorer extends Activity {
 		case 0:
 			mProgressDialog = new ProgressDialog(this);
 			mProgressDialog.setMessage("Uploading...");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 2:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Moving...");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 9:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Processing");
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			mProgressDialog.setCancelable(true);
 			mProgressDialog.show();

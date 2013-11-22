@@ -2,6 +2,8 @@ package com.example.box_client;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.dropbox.client2.DropboxAPI;
@@ -39,29 +42,57 @@ public class MainActivity extends Activity {
 	final static private String ACCESS_SECRET_NAME = "ACCESS_SECRET";
 
 	final static public String ROOT = "/";
-	
+
 	DropboxAPI<AndroidAuthSession> mDBApi;
 
+	private boolean isVerify = false;
 	private boolean isLogin;
 	private Button btt_explorer;
 	private Button btt_authentication;
+	private Button btt_verify;
+	private ProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.activity_main);
 		AndroidAuthSession session = buildSession();
 		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
+		btt_authentication = (Button) findViewById(R.id.btt_link);
+		btt_explorer = (Button) findViewById(R.id.btt_explorer);
+		btt_verify = (Button) findViewById(R.id.btt_verify);
 
-		setContentView(R.layout.activity_main);
-		
 		if (Build.VERSION.SDK_INT >= 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
-		btt_authentication = (Button) findViewById(R.id.btt_link);
-		btt_explorer = (Button) findViewById(R.id.btt_explorer);
+
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			isVerify = extras.getBoolean("IS_VERIFY");
+		}
+		if (isVerify == false && isLogin == false) {
+			
+			Log.e("BEGINNING", "RUN_VERY");
+			btt_authentication.setVisibility(View.GONE);
+			btt_explorer.setVisibility(View.GONE);
+			
+			btt_verify.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					MainActivity.this.finish();
+					Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
+					MainActivity.this.startActivity(fileExplorer);
+				}
+			});
+		} 
+		execuse();
+	}
+
+	private void execuse() {
 		btt_explorer.setVisibility(View.GONE);
 		btt_authentication.setOnClickListener(new View.OnClickListener() {
 
@@ -71,30 +102,33 @@ public class MainActivity extends Activity {
 				if (isLogin) {
 					mDBApi.getSession().unlink();
 					clearKeys();
+					isVerify = false;
 					setLoggedIn(false);
 				} else {
 					mDBApi.getSession().startAuthentication(MainActivity.this);
 				}
 			}
 		});
-		
+
 		btt_explorer.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
-				Explorer explo = new Explorer(MainActivity.this.getApplicationContext(), mDBApi, ROOT, MainActivity.this);
+
+				Explorer explo = new Explorer(MainActivity.this
+						.getApplicationContext(), mDBApi, ROOT,
+						MainActivity.this);
 				Explorer.setInstance(explo);
 				explo.execute();
-				
-				
+
 				/*
-				Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
-				MainActivity.this.startActivity(fileExplorer);
-				*/
+				 * Intent fileExplorer = new Intent(MainActivity.this,
+				 * FormAuthentication.class);
+				 * MainActivity.this.startActivity(fileExplorer);
+				 */
 			}
 		});
-		
+
 		setLoggedIn(mDBApi.getSession().isLinked());
 	}
 
@@ -117,9 +151,10 @@ public class MainActivity extends Activity {
 
 	private void setLoggedIn(boolean loggedIn) {
 		isLogin = loggedIn;
-		if (loggedIn) {
+		if (loggedIn == true && isVerify == true) {
 			btt_authentication.setText("Unlink from Dropbox");
 			btt_explorer.setVisibility(View.VISIBLE);
+			btt_verify.setVisibility(View.GONE);
 			try {
 				Account c = mDBApi.accountInfo();
 				Log.e("NAME", c.displayName);
@@ -128,9 +163,24 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 
-		} else {
+		} else if (loggedIn == false && isVerify == true){
 			btt_authentication.setText("Authentication");
 			btt_explorer.setVisibility(View.GONE);
+			btt_verify.setVisibility(View.GONE);
+		} else if (loggedIn == false && isVerify == false) {
+			btt_authentication.setVisibility(View.GONE);
+			btt_explorer.setVisibility(View.GONE);
+			btt_verify.setVisibility(View.VISIBLE);
+			btt_verify.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					MainActivity.this.finish();
+					Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
+					MainActivity.this.startActivity(fileExplorer);
+				}
+			});
 		}
 	}
 
@@ -180,5 +230,23 @@ public class MainActivity extends Activity {
 		}
 
 		return session;
+	}
+	
+	/******************************************************
+	 * 		Dialog to process OnClickUploadItem			  *
+	 ******************************************************/
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Listing directories...");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		default:
+			return null;
+		}
 	}
 }

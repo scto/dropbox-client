@@ -19,7 +19,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Explorer extends AsyncTask<Void, Long, Boolean> {
+public class Explorer extends AsyncTask<Void, Long, Boolean>  implements Finder{
 
 	private Context ctx;
 	private DropboxAPI<AndroidAuthSession> mDBApi;
@@ -37,6 +37,13 @@ public class Explorer extends AsyncTask<Void, Long, Boolean> {
 		listExplorer = new ArrayList<Entry>();
 	}
 
+	
+	@SuppressWarnings("deprecation")
+	protected void onPreExecute() {
+		super.onPreExecute();
+		mainActivity.showDialog(0);
+	}
+	
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		// TODO Auto-generated method stub
@@ -70,16 +77,14 @@ public class Explorer extends AsyncTask<Void, Long, Boolean> {
 	}
 
 	@Override
-	protected void onProgressUpdate(Long... progress) {
-
-	}
-
-	@Override
 	protected void onPostExecute(Boolean result) {
+		mainActivity.dismissDialog(0);
+		mainActivity.removeDialog(0);
+		mainActivity.finish();
 		Intent fileExplorer = new Intent(mainActivity, FileExplorer.class);
 		mainActivity.startActivity(fileExplorer);
 	}
-
+	
 	/*
 	 * Explorer APIs
 	 */

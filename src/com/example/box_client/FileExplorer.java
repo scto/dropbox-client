@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -35,6 +39,7 @@ public class FileExplorer extends Activity {
 	ArrayAdapter<String> listAdapter;
 	private Explorer explorer;
 	public static int ITEM_LONGCLICKED;
+	private ProgressDialog mProgressDialog;
 	
 	/*
 	 * Dialog Custom Properties
@@ -59,8 +64,15 @@ public class FileExplorer extends Activity {
 		list.setAdapter(adapter);
 
 		// Go Forward
-		list.setOnItemClickListener(new OnClickItemForwardExplorer(explorer,
-				listExplorer, this));
+		//list.setOnItemClickListener(new OnClickItemForwardExplorer(explorer,listExplorer, this));
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+				// TODO Auto-generated method stub
+				new OnClickForward(explorer, FileExplorer.this, index).execute();
+			}
+		});
 
 		list.setOnItemLongClickListener(new OnItemLongClickOptions(this));
 	}
@@ -92,19 +104,11 @@ public class FileExplorer extends Activity {
 			}
 		}
 	}
-
-	// Reload Activity
-	public void updateFileExplorer () {
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
-	}
 	
 	// Implement Listener for Back button
 	@Override
 	public void onBackPressed() {
-		explorer.goBackward();
-		updateFileExplorer();
+		new OnClickBackward(explorer, FileExplorer.this).execute();
 	}
 
 	
@@ -147,9 +151,8 @@ public class FileExplorer extends Activity {
 				if (name.equals("")) {
 					s = "Invalid Input!"; // Validate blank input
 				} else {
-					explorer.renameDirectory(directory, name);
+					new ContextItemSelector(explorer, FileExplorer.this, 1, name, directory).execute();
 					s = "Rename Successfully!";		                
-					updateFileExplorer();
 				}
 				Toast.makeText(FileExplorer.this, s, 3000).show(); // Note user
 				custom.dismiss();
@@ -176,51 +179,83 @@ public class FileExplorer extends Activity {
 		String fileName = listExplorer.get(ITEM_LONGCLICKED).fileName();
 		switch (id) {
 		case 0:
-			explorer.delPath(directory);
-			updateFileExplorer();
+			// Delete
+			new ContextItemSelector(explorer, FileExplorer.this, id, fileName, directory).execute();
 			break;
 		case 1:
 			// Rename
 			renameListener(fileName, directory);
-			updateFileExplorer();
 			break;
 		case 2:
 			// Moving Directory
-			explorer.goForward(MainActivity.ROOT);
-			this.finish();
-			Intent fileDropboxExplorer = new Intent(FileExplorer.this, FileDropboxExplorer.class);
-			fileDropboxExplorer.putExtra("OLD_PATH", directory);
-			fileDropboxExplorer.putExtra("FILE_NAME", fileName);
-			fileDropboxExplorer.putExtra("ID", 2);
-			FileExplorer.this.startActivity(fileDropboxExplorer);
+			new ContextItemSelector(explorer, FileExplorer.this, id, fileName, directory).execute();
 			break;
 		case 3:
 			// Download
-			explorer.goForward(MainActivity.ROOT);
-			this.finish();
-			Intent fileSystemExplorer = new Intent(FileExplorer.this, FileSystemExplorer.class);
-			fileSystemExplorer.putExtra("OLD_PATH", directory);
-			fileSystemExplorer.putExtra("FILE_NAME", fileName);
-			fileSystemExplorer.putExtra("ID", 3);
-			FileExplorer.this.startActivity(fileSystemExplorer);
+			new ContextItemSelector(explorer, FileExplorer.this, id, fileName, directory).execute();
 			break;
 		case 4:
 			// Upload
-			explorer.goForward(MainActivity.ROOT);
-			Intent fileSysExplorer = new Intent(FileExplorer.this, FileSystemExplorer.class);
-			fileSysExplorer.putExtra("ID", 4);
-			FileExplorer.this.startActivity(fileSysExplorer);
-			Explorer.getInstance().setPath(MainActivity.ROOT);
-			this.finish();
+			new ContextItemSelector(explorer, FileExplorer.this, id, fileName, directory).execute();
 			break;
 		case 5:
 			// Exit
-			this.finish();
+			finish();
 			break;
 		default:
 			break;
 
 		}
 		return true;
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Path is deleting!");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 1:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Item is renaming!");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 2:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Select a new Dropbox's location!");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 3:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Go to Filesytem to Save Item!");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 4:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Go to Filesytem to Upload New Item!");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		case 9:
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage("Processing");
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setCancelable(true);
+			mProgressDialog.show();
+			return mProgressDialog;
+		default:
+			return null;
+		}
 	}
 }

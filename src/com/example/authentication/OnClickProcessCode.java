@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.box_client.MainActivity;
 import com.example.mail_sender.GmailSender;
 
 public class OnClickProcessCode implements OnClickListener {
@@ -49,9 +50,12 @@ public class OnClickProcessCode implements OnClickListener {
 			break;
 		case 1:
 			if (input.equals(content)) {
-				showMess("Hurrrraaaaaa");
+				activity.finish();
+				Intent authen = new Intent(activity, MainActivity.class);
+				authen.putExtra("IS_VERIFY", true);
+				activity.startActivity(authen);
 			} else {
-				showMess("Failedddddd");
+				showMess("Code is invalid!");
 			}
 			break;
 		default:

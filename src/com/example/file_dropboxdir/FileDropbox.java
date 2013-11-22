@@ -12,9 +12,9 @@ import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.example.box_client.Explorer;
-import com.example.box_client.MainActivity;
+import com.example.box_client.Finder;
 
-public class FileDropbox {
+public class FileDropbox implements Finder{
 	private ArrayList<Entry> listExplorer;
 	private ArrayList<String> listTitles;
 	private ArrayList<String> listDescriptions;
@@ -179,6 +179,18 @@ public class FileDropbox {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void delPath(String directory) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void renameDirectory(String fromPath, String newName) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

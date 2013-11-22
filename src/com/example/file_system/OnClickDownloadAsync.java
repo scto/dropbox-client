@@ -60,6 +60,7 @@ public class OnClickDownloadAsync extends AsyncTask<String, Void, Void> {
 	
 	
 	protected void onPostExecute(Void unused) {
+		showMess("Downloading successfully!");
 		FileSystem.getInstance().goForward(MainActivity.ROOT);
 		activity.dismissDialog(0);
 		activity.removeDialog(0);

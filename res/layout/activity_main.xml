@@ -19,4 +19,10 @@
         android:layout_gravity="right"
         android:text="DropBox" />
 
+    <Button
+        android:id="@+id/btt_verify"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Verify" />
+
 </LinearLayout>

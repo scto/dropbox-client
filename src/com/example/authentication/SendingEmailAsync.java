@@ -41,11 +41,12 @@ public class SendingEmailAsync extends AsyncTask<String, Void, Void> {
 	}
 
 	protected void onPostExecute(Void unused) {
+		activity.dismissDialog(0);
+		activity.removeDialog(0);
+		activity.finish();
 		Intent intent = new Intent(activity, VerifyAuthentication.class);
 		intent.putExtra("CODE_GENERATE", content);
 		activity.startActivity(intent);
-		activity.dismissDialog(0);
-		activity.removeDialog(0);
 	}
 
 }
