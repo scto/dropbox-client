@@ -1,8 +1,8 @@
 package com.example.box_client;
 
 import com.example.editing.FileEditing;
-import com.example.file_dropboxdir.FileDropboxExplorer;
-import com.example.file_system.FileSystemExplorer;
+import com.example.file_dropboxdir.FileDropboxActivity;
+import com.example.file_system.FileSystemActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,7 +52,7 @@ public class ContextItemSelector extends AsyncTask<String, Void, Void>{
 			// Moving Directory
 			finder.goForward(MainActivity.ROOT);
 			activity.finish();
-			Intent fileDropboxExplorer = new Intent(activity, FileDropboxExplorer.class);
+			Intent fileDropboxExplorer = new Intent(activity, FileDropboxActivity.class);
 			fileDropboxExplorer.putExtra("OLD_PATH", directory);
 			fileDropboxExplorer.putExtra("FILE_NAME", fileName);
 			fileDropboxExplorer.putExtra("ID", 2);
@@ -62,7 +62,7 @@ public class ContextItemSelector extends AsyncTask<String, Void, Void>{
 			// Download
 			finder.goForward(MainActivity.ROOT);
 			activity.finish();
-			Intent fileSystemExplorer = new Intent(activity, FileSystemExplorer.class);
+			Intent fileSystemExplorer = new Intent(activity, FileSystemActivity.class);
 			fileSystemExplorer.putExtra("OLD_PATH", directory);
 			fileSystemExplorer.putExtra("FILE_NAME", fileName);
 			fileSystemExplorer.putExtra("ID", 3);
@@ -71,7 +71,7 @@ public class ContextItemSelector extends AsyncTask<String, Void, Void>{
 		case 4:
 			// Upload
 			finder.goForward(MainActivity.ROOT);
-			Intent fileSysExplorer = new Intent(activity, FileSystemExplorer.class);
+			Intent fileSysExplorer = new Intent(activity, FileSystemActivity.class);
 			fileSysExplorer.putExtra("ID", 4);
 			activity.startActivity(fileSysExplorer);
 			Explorer.getInstance().setPath(MainActivity.ROOT);

@@ -45,7 +45,17 @@ public class FileSystemAdapter extends ArrayAdapter<String>{
 		txtTitle.setText(listTitles.get(position));
 		txtDescription.setText(listSizes.get(position));
 
-		File e = listExplorer.get(position);
+		File e = null;
+		try {
+			 e = listExplorer.get(position);
+		} catch (Exception ex){
+			img.setVisibility(View.GONE);
+			txtTitle.setVisibility(View.GONE);
+			txtDescription.setVisibility(View.GONE);
+			return row;
+		}
+
+		
 		if (e.isDirectory()) {
 			img.setImageResource(R.drawable.folder);
 		} else {

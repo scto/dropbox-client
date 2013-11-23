@@ -10,6 +10,7 @@ import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
+import com.example.grid_view.GridviewActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -81,7 +82,7 @@ public class Explorer extends AsyncTask<Void, Long, Boolean>  implements Finder{
 		mainActivity.dismissDialog(0);
 		mainActivity.removeDialog(0);
 		mainActivity.finish();
-		Intent fileExplorer = new Intent(mainActivity, FileExplorer.class);
+		Intent fileExplorer = new Intent(mainActivity, ExplorerActivity.class);
 		mainActivity.startActivity(fileExplorer);
 	}
 	

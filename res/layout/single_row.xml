@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:maxHeight="69dp"
-        android:maxWidth="69dp"
+        android:maxHeight="64dp"
+        android:maxWidth="64dp"
         android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -27,7 +27,7 @@
         android:layout_toRightOf="@+id/imageView1"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:text="Titile"
+        android:text="@string/title"
         android:textSize="18sp" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_alignParentRight="true"
         android:paddingBottom="10dp"
         android:paddingRight="10dp"
-        android:text="Description"
+        android:text="@string/description"
         android:textSize="13sp" />
 
 </RelativeLayout>

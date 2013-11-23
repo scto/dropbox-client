@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.box_client.FileExplorer;
+import com.example.box_client.ExplorerActivity;
 import com.example.box_client.R;
 
 public class FileEditing extends Activity {
@@ -62,7 +62,7 @@ public class FileEditing extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent returnIntent = new Intent(FileEditing.this, FileExplorer.class);
+				Intent returnIntent = new Intent(FileEditing.this, ExplorerActivity.class);
 				FileEditing.this.finish();
 				FileEditing.this.startActivity(returnIntent);
 			}

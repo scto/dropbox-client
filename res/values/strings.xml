@@ -7,5 +7,15 @@
     <string name="select_button">Select</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
+    <string name="authentication">Authentication</string>
+    <string name="dropboxbtt">Dropbox</string>
+    <string name="verification">Verification"</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="inputCode">Enter Code:</string>
+    <string name="verify">Verify</string>
+    <string name="action_search"></string>
+    <string name="action_grid"></string>
+    <string name="action_list"></string>
 
 </resources>

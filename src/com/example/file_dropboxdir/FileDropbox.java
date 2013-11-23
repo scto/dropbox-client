@@ -13,6 +13,7 @@ import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.example.box_client.Explorer;
 import com.example.box_client.Finder;
+import com.example.box_client.MainActivity;
 
 public class FileDropbox implements Finder{
 	private ArrayList<Entry> listExplorer;
@@ -36,7 +37,8 @@ public class FileDropbox implements Finder{
 	
 	private void init() {
 		listExplorer = new ArrayList<Entry>();
-		getFolderList("/");
+		setPath(MainActivity.ROOT);
+		getFolderList(MainActivity.ROOT);
 	}
 	
 	private void initTitlesAndDescription () {

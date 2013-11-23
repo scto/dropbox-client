@@ -35,37 +35,47 @@ public final class R {
         public static final int docx=0x7f020003;
         public static final int file=0x7f020004;
         public static final int folder=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int list_item_bg_normal=0x7f020007;
-        public static final int list_item_bg_pressed=0x7f020008;
-        public static final int list_selector=0x7f020009;
-        public static final int music=0x7f02000a;
-        public static final int pdf=0x7f02000b;
-        public static final int raricon=0x7f02000c;
-        public static final int round=0x7f02000d;
-        public static final int text=0x7f02000e;
-        public static final int zipicon=0x7f02000f;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_grid=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int ic_list=0x7f020009;
+        public static final int list_item_bg_normal=0x7f02000a;
+        public static final int list_item_bg_pressed=0x7f02000b;
+        public static final int list_selector=0x7f02000c;
+        public static final int music=0x7f02000d;
+        public static final int pdf=0x7f02000e;
+        public static final int raricon=0x7f02000f;
+        public static final int round=0x7f020010;
+        public static final int text=0x7f020011;
+        public static final int zipicon=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f090015;
+        public static final int action_search=0x7f09001c;
+        public static final int action_settings=0x7f09001b;
         public static final int btn_ted_cancel=0x7f09000b;
         public static final int btn_ted_save=0x7f09000a;
         public static final int bttCan=0x7f090005;
-        public static final int bttCancelDir=0x7f09000e;
-        public static final int bttCancelFiSys=0x7f090011;
+        public static final int bttCancelDir=0x7f090012;
+        public static final int bttCancelFiSys=0x7f090015;
         public static final int bttSave=0x7f090004;
-        public static final int bttSelectDir=0x7f09000d;
-        public static final int bttSelectFiSys=0x7f090010;
+        public static final int bttSelectDir=0x7f090011;
+        public static final int bttSelectFiSys=0x7f090014;
         public static final int btt_explorer=0x7f090001;
+        public static final int btt_grid=0x7f09001a;
         public static final int btt_link=0x7f090000;
+        public static final int btt_list=0x7f090019;
         public static final int btt_verify=0x7f090002;
         public static final int edit_email_code=0x7f090008;
-        public static final int imageView1=0x7f090012;
-        public static final int listView1=0x7f09000f;
+        public static final int gridView1=0x7f09000d;
+        public static final int grid_item_image=0x7f09000e;
+        public static final int grid_item_label=0x7f09000f;
+        public static final int imageView1=0x7f090016;
+        public static final int label=0x7f090010;
+        public static final int listView1=0x7f090013;
         public static final int textView1=0x7f090006;
-        public static final int txtDescription=0x7f090014;
+        public static final int txtDescription=0x7f090018;
         public static final int txtNewName=0x7f090003;
-        public static final int txtTittle=0x7f090013;
+        public static final int txtTittle=0x7f090017;
         public static final int txt_edit_file=0x7f09000c;
         public static final int txt_email_code=0x7f090007;
         public static final int verify_button=0x7f090009;
@@ -76,21 +86,36 @@ public final class R {
         public static final int dummy=0x7f030002;
         public static final int email_form=0x7f030003;
         public static final int file_editor=0x7f030004;
-        public static final int list_dropboxdir=0x7f030005;
-        public static final int list_explorer=0x7f030006;
-        public static final int list_filesystem_explorer=0x7f030007;
-        public static final int single_row=0x7f030008;
+        public static final int grid_view=0x7f030005;
+        public static final int grid_view_item=0x7f030006;
+        public static final int list_dropboxdir=0x7f030007;
+        public static final int list_explorer=0x7f030008;
+        public static final int list_filesystem_explorer=0x7f030009;
+        public static final int single_row=0x7f03000a;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int grid=0x7f080000;
+        public static final int list=0x7f080001;
+        public static final int main=0x7f080002;
+        public static final int main_activity_actions=0x7f080003;
     }
     public static final class string {
+        public static final int action_grid=0x7f06000e;
+        public static final int action_list=0x7f06000f;
+        public static final int action_search=0x7f06000d;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int authentication=0x7f060006;
         public static final int cancel_button=0x7f060004;
+        public static final int description=0x7f06000a;
+        public static final int dropboxbtt=0x7f060007;
         public static final int hello_world=0x7f060002;
+        public static final int inputCode=0x7f06000b;
         public static final int save_button=0x7f060005;
         public static final int select_button=0x7f060003;
+        public static final int title=0x7f060009;
+        public static final int verification=0x7f060008;
+        public static final int verify=0x7f06000c;
     }
     public static final class style {
         /** 

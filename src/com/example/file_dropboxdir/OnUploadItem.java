@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.example.box_client.Explorer;
-import com.example.box_client.FileExplorer;
+import com.example.box_client.ExplorerActivity;
 import com.example.box_client.MainActivity;
 
 import android.app.Activity;
@@ -70,7 +70,7 @@ public class OnUploadItem extends AsyncTask<String, Void, Void>{
 		activity.removeDialog(0);
 		activity.finish(); // It will go back to FileSystemExplorer Activity
 		// Jumping to Dropbox directory
-		Intent fileExplorer = new Intent(activity, FileExplorer.class);
+		Intent fileExplorer = new Intent(activity, ExplorerActivity.class);
 		activity.startActivity(fileExplorer);
 	}
 	

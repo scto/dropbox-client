@@ -58,6 +58,7 @@ public class OnGetThumnails extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPostExecute(Void unsed) {
-    	img.setImageBitmap(mBitmap);
+    	Bitmap resizedbitmap=Bitmap.createScaledBitmap(mBitmap, 100, 100, true);
+    	img.setImageBitmap(resizedbitmap);
     }
 }

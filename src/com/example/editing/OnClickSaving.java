@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.exception.DropboxException;
 import com.example.box_client.Explorer;
-import com.example.box_client.FileExplorer;
+import com.example.box_client.ExplorerActivity;
 import com.example.box_client.MainActivity;
 import com.example.file_system.FileSystem;
 
@@ -65,7 +65,7 @@ public class OnClickSaving extends AsyncTask<Void, Void, Void>{
 		activity.dismissDialog(1);
 		activity.removeDialog(1);
 		activity.finish();
-		Intent fileExplorer = new Intent(activity, FileExplorer.class);
+		Intent fileExplorer = new Intent(activity, ExplorerActivity.class);
 		activity.startActivity(fileExplorer);
 	}
 	

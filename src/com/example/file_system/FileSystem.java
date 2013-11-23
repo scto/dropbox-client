@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.example.box_client.FileExplorer;
+import com.example.box_client.ExplorerActivity;
+import com.example.box_client.MainActivity;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -78,7 +79,7 @@ public class FileSystem {
 
 	private void init() {
 		listExplorer = new ArrayList<File>();
-		File curDir = new File("/");
+		File curDir = new File(MainActivity.ROOT);
 		File[] dir = curDir.listFiles();
 		for (int i = 0; i < dir.length; i++) {
 			File tmp = dir[i];
@@ -86,6 +87,7 @@ public class FileSystem {
 		}
 		insertTitles();
 		insertDescription();
+		setCurPath(MainActivity.ROOT);
 	}
 
 	private void insertTitles() {
@@ -128,7 +130,7 @@ public class FileSystem {
 		File[] dir = curDir.listFiles();
 
 		// Without if-condition, dir will return Null Pointer Exception
-		if (dir != null && dir.length > 0) {
+		if (dir != null && dir.length >= 0) {
 			listExplorer.clear();
 			for (int i = 0; i < dir.length; i++) {
 				File tmp = dir[i];

@@ -24,6 +24,7 @@ import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 import com.dropbox.client2.session.TokenPair;
 import com.example.authentication.FormAuthentication;
+import com.example.grid_view.GridviewActivity;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class MainActivity extends Activity {
@@ -41,7 +42,7 @@ public class MainActivity extends Activity {
 
 	DropboxAPI<AndroidAuthSession> mDBApi;
 
-	private boolean isVerify = true;
+	private boolean isVerify = false;
 	private boolean isLogin;
 	private Button btt_explorer;
 	private Button btt_authentication;
@@ -69,22 +70,23 @@ public class MainActivity extends Activity {
 			isVerify = extras.getBoolean("IS_VERIFY");
 		}
 		if (isVerify == false && isLogin == false) {
-			
+
 			Log.e("BEGINNING", "RUN_VERY");
 			btt_authentication.setVisibility(View.GONE);
 			btt_explorer.setVisibility(View.GONE);
-			
+
 			btt_verify.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					MainActivity.this.finish();
-					Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
+					Intent fileExplorer = new Intent(MainActivity.this,
+							FormAuthentication.class);
 					MainActivity.this.startActivity(fileExplorer);
 				}
 			});
-		} 
+		}
 		execuse();
 	}
 
@@ -116,12 +118,12 @@ public class MainActivity extends Activity {
 						MainActivity.this);
 				Explorer.setInstance(explo);
 				explo.execute();
-
 				/*
 				 * Intent fileExplorer = new Intent(MainActivity.this,
-				 * FormAuthentication.class);
+				 * GridviewActivity.class);
 				 * MainActivity.this.startActivity(fileExplorer);
 				 */
+
 			}
 		});
 
@@ -159,7 +161,7 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 
-		} else if (loggedIn == false && isVerify == true){
+		} else if (loggedIn == false && isVerify == true) {
 			btt_authentication.setText("Authentication");
 			btt_explorer.setVisibility(View.GONE);
 			btt_verify.setVisibility(View.GONE);
@@ -168,12 +170,13 @@ public class MainActivity extends Activity {
 			btt_explorer.setVisibility(View.GONE);
 			btt_verify.setVisibility(View.VISIBLE);
 			btt_verify.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					MainActivity.this.finish();
-					Intent fileExplorer = new Intent(MainActivity.this, FormAuthentication.class);
+					Intent fileExplorer = new Intent(MainActivity.this,
+							FormAuthentication.class);
 					MainActivity.this.startActivity(fileExplorer);
 				}
 			});
@@ -227,9 +230,9 @@ public class MainActivity extends Activity {
 
 		return session;
 	}
-	
+
 	/******************************************************
-	 * 		Dialog to process OnClickUploadItem			  *
+	 * Dialog to process OnClickUploadItem *
 	 ******************************************************/
 	@Override
 	protected Dialog onCreateDialog(int id) {

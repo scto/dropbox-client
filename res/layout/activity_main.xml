@@ -10,19 +10,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="Authentication" />
+        android:text="@string/authentication" />
 
     <Button
         android:id="@+id/btt_explorer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="DropBox" />
+        android:text="@string/dropboxbtt" />
 
     <Button
         android:id="@+id/btt_verify"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Verify" />
+        android:text="@string/verification" />
 
 </LinearLayout>

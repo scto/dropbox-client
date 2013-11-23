@@ -43,10 +43,20 @@ public class OnClickForward extends AsyncTask<String, Void, Void> {
 
 	@SuppressWarnings("deprecation")
 	protected void onPostExecute(Void unused) {
+		if (explorer.getListExplorer().isEmpty()) {
+			showMess("Empty Folder!");
+		}
+		
 		Intent intent = activity.getIntent();
 		activity.dismissDialog(9);
 		activity.removeDialog(9);
 		activity.finish();
 		activity.startActivity(intent);
+	}
+
+	private void showMess(String str) {
+		Toast toast = Toast.makeText(activity, str,3000);
+		toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
 	}
 }

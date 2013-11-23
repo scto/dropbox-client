@@ -116,7 +116,7 @@ public class FileExplorer extends Activity {
 	}
 
 	/******************************************************
-	 * Context Menu *
+	 * Context Menu 									  *
 	 ******************************************************/
 
 	@Override
